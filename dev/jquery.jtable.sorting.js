@@ -83,21 +83,16 @@
             $.each(self.options.defaultSorting.split(","), function (orderIndex, orderValue) {
                 $.each(self.options.fields, function (fieldName, fieldProps) {
                     if (fieldProps.sorting) {
-                        var colOffset = orderValue.indexOf(fieldName);
-                        if (colOffset > -1) {
-                            if (orderValue.toUpperCase().indexOf(' DESC', colOffset) > -1) {
-                                self._lastSorting.push({
-                                    fieldName: fieldName,
-                                    sortOrder: 'DESC'
-                                });
-                            } else {
-                                self._lastSorting.push({
-                                    fieldName: fieldName,
-                                    sortOrder: 'ASC'
-                                });
-                            }
-                        }
-                    }
+						var orderValueAry = orderValue.split(' ');
+						if(orderValueAry.indexOf(fieldName) > -1){
+							var orderType = orderValueAry[--orderValue.length].toUpperCase();
+							orderType = ('DESC' === orderType)? orderType:'ASC';
+							self._lastSorting.push({
+								fieldName: fieldName,
+								sortOrder: orderType
+							});
+						}else{}
+                    }else{}
                 });
             });
         },
